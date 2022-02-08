@@ -1,6 +1,7 @@
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
+import { PizzaService } from './src/pizzas.service';
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -11,7 +12,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //Routes
-
 const pizzaService = new PizzaService();
 app.get('/api/pizzas',(req, res) => {
     const pizzas = pizzaService.getCreatedPizzas();
@@ -21,15 +21,14 @@ app.get('/api/pizzas',(req, res) => {
     });
 });
 
-app.get('/api/pizzas/presets'), (req, res) +> {
+app.get('/api/pizzas/presets',(req, res) => {
     const pizzas = pizzaService.getPizzaPresets();
-
     res.send({
         msg: 'Found pizza presets',
         pizzas,
     });
-}
+});
 
-app.listen(4000, () => {
-    console.log('Server is running at http://localhost:$(4000)');
+app.listen(PORT, () => {
+    console.log('Server is running at http://localhost:$('+PORT+')');
 });
