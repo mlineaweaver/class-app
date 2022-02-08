@@ -1,0 +1,6 @@
+const pizzasDOC = {
+    _id: 'dhalidihgoah',
+    size: 'small',
+    toppings: [],
+},
+{}
