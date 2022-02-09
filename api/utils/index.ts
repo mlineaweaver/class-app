@@ -1,1 +1,1 @@
-export * from ./idify
+export * from "./idify"
