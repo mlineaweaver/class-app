@@ -17,7 +17,7 @@ export class PizzaService {
 
     getPizzaPresets(): Observable<PizzaEntity[]> {
         return this.http
-        .get<PizzaResponse>('/api/pizzas/presets')
+        .get<PizzaResponse>('http://localhost:4000/api/pizzas/presets')
         .pipe(map((data) => data.pizzas));
     }
 }

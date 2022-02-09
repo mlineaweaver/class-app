@@ -11,5 +11,3 @@ export class HomeComponent {
 
   constructor(private pizzasService: PizzaService) {}
 }
-
-
