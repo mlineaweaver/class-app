@@ -8,11 +8,70 @@
   </div>
 
   <!-- Pizza Form -->
-  <!-- Pizza Summary -->
-  <div class="pizza__summary">
-    <p>Small {{ prices.small.size | size }}</p>
-    <p>Medium {{ prices.meduim.size | size }}</p>
-    <p>Large {{ prices.large.size | size }}</p>
-    <p>X-Large {{ prices["x-large"].size | size }}</p>
-  </div>
+  <form class= "pizza-form" [formGroup]="pizzaForm" novalidate>
+    <div class="pizza-creator">
+      <h2>
+        Choose your pizzas
+        <button class = "button" type="button" (click)="addPizza()">
+          <i class="fa fa-plus"></i>
+          Add pizza
+        </button>
+      </h2>
+
+      <div *ngFor="let pizza of pizzas.controls; let i= index">
+        <div class="pizza-creator_header" (click)="togglePizza(i)">
+          <i
+          class = "fa fa-fw pizza-creator_icon"
+          [class.fa-chevron-down]="openPizza != i"
+          [class.fa-chevron-up]="openPizza == i"
+          ></i>
+          Pizza {{i + 1}}
+          
+          <i
+            class= "fa fa-fw pizza-creator_status"
+            [class.fa-check]="pizza.valid"
+            [class.fa-times]="pizza.invalid"
+          ></i>
+
+          <div
+            class="pizza-creator_delete"
+            *ngIf="pizzas.controls.length > 1"
+            (click)="removePizza(i)"
+           >
+          <i class="fa fa-trash fa-fw"></i>
+          </div>
+        </div>
+
+        <div
+        class="pizza-creator_content"
+        [class.pizza-creator_content--open]="openPizza == i"
+        [formGroup]="toFormGroup(pizza)"
+        >
+        <h3>Select the size <span class="required">*</span></h3>
+        <app-pizza-size formControlName= "toppings"></app-pizza-size>
+        </div>
+      </div>
+
+
+
+
+
+      <!--  -->
+      <!-- pizza size -->
+     
+      <!-- pizza toppings -->
+      <!-- <h3>Pick your toppings</h3> -->
+      <!-- <app-pizza-toppings formControlName="toppings"></app-pizza-toppings> -->
+
+    </div>
+
+     <!-- Pizza Summary -->
+      <div class="pizza__summary">
+      
+      </div> 
+    
+
+  </form>
+ 
+  
 </div>
