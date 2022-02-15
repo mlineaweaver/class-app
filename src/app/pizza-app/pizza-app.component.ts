@@ -1,5 +1,15 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Pizza } from 'api/lib/api-interfaces';
+import { map, startWith } from 'rxjs';
+
+type PizzaPrice = {
+  [size: string]: {
+    base: number;
+    size: number;
+    toppings: number;
+  };
+};
 
 @Component({
   selector: 'app-pizza-app',
@@ -9,11 +19,11 @@ import { AbstractControl, FormArray, FormBuilder, FormGroup } from '@angular/for
 export class PizzaAppComponent {
   activePizza = 0;
 
-  prices = {
-    small: { base: 9.99, size: 10 },
-    meduim: { base: 11.99, size: 12 },
-    large: { base: 13.99, size: 14 },
-    'x-large': { base: 15.99, size: 16 },
+  prices: PizzaPrice = {
+    small: { base: 9.99, size: 10, toppings: 0.69 },
+    medium: { base: 11.99, size: 12, toppings: 0.99 },
+    large: { base: 13.99, size: 14, toppings: 1.29 },
+    'x-large': { base: 15.99, size: 16, toppings: 1.59 },
   };
   pizzaForm = this.fb.group({
     pizzas: this.fb.array([this.createPizza()]),
@@ -22,45 +32,38 @@ export class PizzaAppComponent {
   get pizzas(): FormArray {
     return this.pizzaForm.get('pizzas') as FormArray;
   }
-  get openPizza() {
-    return this.visiblePizza;
-  }
 
-  set openPizza(index: number){
-    this.visiblePizza = index;
-    if (~index) {
-      this.togglePizza(index);
-    }
-  }
-
-  private visiblePizza = 0;
+  total$ = this.pizzas.valueChanges.pipe(
+    startWith(this.calculateTotal(this.pizzas.value)),
+    map(() => this.calculateTotal(this.pizzas.value))
+  );
 
   constructor(private fb: FormBuilder) {}
-   //pizza 1: {size, toppings }
-    //pizza 2: {size, toppings }
 
   createPizza() {
     return this.fb.group({
-      size: '',
+      size: ['small', Validators.required],
       toppings: [[]],
     });
   }
 
-  addPizza(){
+  addPizza() {
     this.pizzas.push(this.createPizza());
-    this.openPizza = this.pizzas.length - 1;
   }
 
-  removePizza(index:number) {
+  removePizza(index: number) {
     this.pizzas.removeAt(index);
-    this.openPizza = this.pizzas.length -1;
   }
 
   togglePizza(index: number) {
     this.activePizza = index;
   }
 
-  toFormGroup(control: AbstractControl): FormGroup {
-    return control as FormGroup;
+  calculateTotal(value: Pizza[]): string {
+    const price = value.reduce((acc: number, next: Pizza) => {
+      const price = this.prices[next.size];
+      return acc + price.base + price.toppings * next.toppings.length;
+    }, 0);
+    return price.toFixed(2);
   }
 }
