@@ -4,7 +4,7 @@ import { PizzaEntity } from "api/lib/api-interfaces";
 import { Observable, map } from "rxjs";
 
 
-interface PizzaResponse {
+export interface PizzaResponse {
     msg: string;
     pizzas: PizzaEntity[];
 }
@@ -15,9 +15,8 @@ interface PizzaResponse {
 export class PizzaService {
     constructor(private http: HttpClient) {}
 
-    getPizzaPresets(): Observable<PizzaEntity[]> {
-        return this.http
-        .get<PizzaResponse>('http://localhost:4000/api/pizzas/presets')
-        .pipe(map((data) => data.pizzas));
+    getPizzaPresets(): Observable<PizzaResponse> {
+        return this.http.get<PizzaResponse>('/api/pizzas/presets');
+        
     }
 }
