@@ -1,6 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
+  "description": "",
   "main": "app.ts",
   "scripts": {
     "start": "nodemon app.ts",
@@ -11,6 +12,7 @@
   "dependencies": {
     "cookie-parser": "^1.4.6",
     "express": "^4.17.2",
+    "mongoose": "^6.2.3",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.15",
     "typescript": "^4.5.5",
@@ -18,8 +20,8 @@
   },
   "devDependencies": {
     "@types/cookie-parser": "^1.4.2",
+    "@types/mongoose": "5.11.97",
     "@types/morgan": "^1.9.3",
     "@types/uuid": "^8.3.4"
-  },
-  "description": ""
+  }
 }

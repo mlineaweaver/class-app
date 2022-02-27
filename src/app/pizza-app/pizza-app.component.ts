@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Pizza } from 'api/lib/api-interfaces';
 import { map, startWith } from 'rxjs';
+import { PizzasState, savePizzas } from './state';
 
 type PizzaPrice = {
   [size: string]: {
@@ -25,9 +27,11 @@ export class PizzaAppComponent {
     large: { base: 13.99, size: 14, toppings: 1.29 },
     'x-large': { base: 15.99, size: 16, toppings: 1.59 },
   };
+
   pizzaForm = this.fb.group({
     pizzas: this.fb.array([this.createPizza()]),
   });
+ 
 
   get pizzas(): FormArray {
     return this.pizzaForm.get('pizzas') as FormArray;
@@ -38,7 +42,7 @@ export class PizzaAppComponent {
     map(() => this.calculateTotal(this.pizzas.value))
   );
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private store: Store<PizzasState>) {}
 
   createPizza() {
     return this.fb.group({
@@ -66,4 +70,13 @@ export class PizzaAppComponent {
     }, 0);
     return price.toFixed(2);
   }
+
+  onSubmit(event: any) {
+    console.log(event);
+    const { pizzas } = this.pizzaForm.value;
+    console.log(pizzas);
+    this.store.dispatch(savePizzas({ pizzas }));
+  }
 }
+
+
