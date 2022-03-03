@@ -10,7 +10,8 @@ const PORT = process.env.PORT || 4000;
 
 //mongoose instance connection
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/pizzasdb');
+mongoose.connect('mongodb://127.0.0.1/pizzasdb');
+//mongoose.connect('mongodb://localhost/pizzasdb');
 const db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));

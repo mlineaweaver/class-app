@@ -39,6 +39,6 @@ export class PizzasEffects {
 
   constructor(
     private actions$: Actions,
-    private pizzasService: PizzasService
+    private pizzasService: PizzaService
   ) {}
 }
