@@ -1,26 +1,28 @@
 <div class="pizza-app">
- <app-pizza-viewer
- [pizzas] = "pizzas"
- [activePizza] = "activePizza"
- >
-</app-pizza-viewer>
- </div>
+  <app-pizza-viewer
+    [pizzas]="pizzas"
+    [activePizza]="activePizza"
+  ></app-pizza-viewer>
 
-  <!-- Pizza Form -->
-     <form class="pizza-form" [formGroup]="pizzaForm" novalidate>
-      <app-pizza-creator
-        [pizzas]="pizzas"
-        (add)="addPizza()"
-        (remove)="removePizza($event)"
-        (toggle)="togglePizza($event)"
-      ></app-pizza-creator>
+  <form
+    class="pizza-form"
+    [formGroup]="pizzaForm"
+    (ngSubmit)="onSubmit($event)"
+    novalidate
+    panel
+  >
+    <app-pizza-creator
+      [pizzas]="pizzas"
+      (add)="addPizza()"
+      (remove)="removePizza($event)"
+      (toggle)="togglePizza($event)"
+    ></app-pizza-creator>
 
-       <!-- Pizza Summary -->
-      <app-pizza-summary
-        [pizzas]="pizzas"
-        [prices]="prices"
-        [total]="total$ | async"
-      >
-      </app-pizza-summary>
-    </form>
-
+    <app-pizza-summary
+      [pizzas]="pizzas"
+      [prices]="prices"
+      [total]="total$ | async"
+    >
+    </app-pizza-summary>
+  </form>
+</div>
