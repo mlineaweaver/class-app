@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --proxy-config src/proxy.conf.json",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "start:be": "./api/node_modules/.bin/nodemon --watch './api/*.ts' --exec 'ts-node' ./api/app.ts",
-    "dev": "concurrently -p=\"{name}\"-n=\"Angular, Express\" -c\"green,blue\" \"ng serve\" \"npm run start:be\""
+    "dev": "concurrently -p=\"{name}\"-n=\"Angular, Express\" -c\"green,blue\" \"ng serve --proxy-config src/proxy.conf.json\" \"npm run start:be\""
   },
   "private": true,
   "dependencies": {
