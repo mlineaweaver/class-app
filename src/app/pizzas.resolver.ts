@@ -1,3 +1,4 @@
+
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -25,4 +26,3 @@ export class PizzasResolver implements Resolve<PizzasViewModel> {
 
   constructor(private store: Store<PizzasState>) {}
 }
-
