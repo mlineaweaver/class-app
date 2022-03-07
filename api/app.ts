@@ -8,16 +8,16 @@ import mongoose from 'mongoose';
 const app = express();
 const PORT = process.env.PORT || 4000;
 
-// mongoose instance connection
-// mongoose.Promise = global.Promise;
-// mongoose.connect('mongodb://localhost/pizzasdb');
-// const db = mongoose.connection;
+//mongoose instance connection
+mongoose.Promise = global.Promise;
+mongoose.connect('mongodb://127.0.0.1:27017/pizzasdb');
+const db = mongoose.connection;
 
-// db.on('error', console.error.bind(console, 'connection error:'));
+db.on('error', console.error.bind(console, 'connection error:'));
 
-// db.once('open', () => {
-//   console.log('Connection Successful!');
-// });
+db.once('open', () => {
+  console.log('Connection Successful!');
+});
 
 app.use(logger('dev'));
 app.use(express.json());
